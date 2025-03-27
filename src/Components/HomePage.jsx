@@ -107,6 +107,11 @@ const HomePage = () => {
                         </div>
                       </Slide>
                     </div>
+                    <div className='py-12 my-12 px-96'>
+                      <Fade duration={3000} cascade damping={1}>
+                        <p className='font-outfit md:text-[50px] mb-12 font-semibold'>How It Works?</p>
+                      </Fade>
+                    </div>
                   </div>
                 </div>
             </div>
