@@ -26,6 +26,8 @@ module.exports = {
   },
   plugins: [
     require('twglow'),
-    require('tailwindcss-dotted-background')
+    require('tailwindcss-dotted-background'),
+    require('daisyui'),
+    require('tailwind-glassmorphism')
   ],
 }

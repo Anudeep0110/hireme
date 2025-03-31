@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "glassyeffect/index.css";
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 html::-webkit-scrollbar {
