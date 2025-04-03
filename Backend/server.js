@@ -60,7 +60,7 @@ require('./connexion.js');
 //importing mongodb schemas
 const seekers = require('./Schemas/Seekers.js')
 const devs = require('./Schemas/DevUsers.js')
-
+const sendConnectionRequest = require('./Schemas/ConnectionRequests.js')
 
 // Route to Fetch the Schema of API Routes
 app.get('/getSchema/:apiname', (req, res) => {
@@ -230,6 +230,105 @@ app.put('/update/seeker/:id',(req,res) => {
     })
 })
 
+// Route to Send Connection Request
+app.post('/sendConnectionRequest',(req,res) => {
+    const sender = req.body.sender;
+    const receiver = req.body.receiver;
+    const message = req.body.message || "";
+    const newRequest = new sendConnectionRequest({
+        senderId: sender,
+        receiverId: receiver,
+        message: message,
+        status: 'pending'
+    })
+    newRequest.save()
+    .then(() => {
+        res.status(201).send({message:"Connection Request Sent",data:{}})
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in sending connection request",data:{}})
+    })
+})
+
+
+// Route to Fetch Connection Requests
+app.get('/getConnectionRequests/:id',(req,res) => {
+    sendConnectionRequest.find({receiverId:req.params.id})
+    .then((result) => {
+        if(result.length === 0){
+            res.status(404).send({message:"No Connection Requests Found",data:{}})
+        }else{
+            res.status(200).send({message:"Connection Requests Found",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in fetching connection requests",data:{}})
+    })
+})
+
+// Route to Accept Connection Request
+app.put('/acceptConnectionRequest/:id',(req,res) => {
+    sendConnectionRequest.findByIdAndUpdate(req.params.id,{status:'accepted'},{new:true})
+    .then((result) => {
+        if(!result){
+            res.status(404).send({message:"Connection Request Not Found",data:{}})
+        }else{
+            // Add the sender and receiver to each other's connections
+            const senderId = result.senderId;
+            const receiverId = result.receiverId;
+            seekers.findByIdAndUpdate(senderId, {$addToSet: {connections: {seekerId:receiverId}}}, {new: true})
+            .then(() => {
+                seekers.findByIdAndUpdate(receiverId, {$addToSet: {connections: {seekerId:senderId}}}, {new: true})
+                .then(() => {
+                    console.log("Connection Added");
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(500).send({message:"Error in adding connection",data:{}})
+                })
+            })
+            res.status(200).send({message:"Connection Request Accepted",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in accepting connection request",data:{}})
+    })
+})
+
+// Route to Reject Connection Request
+app.put('/rejectConnectionRequest/:id',(req,res) => {
+    sendConnectionRequest.findByIdAndUpdate(req.params.id,{status:'rejected'},{new:true})
+    .then((result) => {
+        if(!result){
+            res.status(404).send({message:"Connection Request Not Found",data:{}})
+        }else{
+            res.status(200).send({message:"Connection Request Rejected",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in rejecting connection request",data:{}})
+    })
+})
+
+// Route to Delete Connection Request
+app.delete('/deleteConnectionRequest/:id',(req,res) => {
+    sendConnectionRequest.findByIdAndDelete(req.params.id)
+    .then((result) => {
+        if(!result){
+            res.status(404).send({message:"Connection Request Not Found",data:{}})
+        }else{
+            res.status(200).send({message:"Connection Request Deleted",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in deleting connection request",data:{}})
+    })
+})
 
 
 

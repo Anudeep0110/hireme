@@ -43,6 +43,12 @@ const Seekers = new mongoose.Schema({
     }],
     portfolioLink: { type: String, default: '' },
     resumeLink: { type: String, default: '' },
+    connections: [{
+        seekerId:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'seekers'
+        },
+    }]
 });
 
 const Seeker = mongoose.model("seekers", Seekers);
