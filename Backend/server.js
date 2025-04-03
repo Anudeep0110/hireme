@@ -242,8 +242,8 @@ app.post('/sendConnectionRequest',(req,res) => {
         status: 'pending'
     })
     newRequest.save()
-    .then(() => {
-        res.status(201).send({message:"Connection Request Sent",data:{}})
+    .then((result) => {
+        res.status(201).send({message:"Connection Request Sent",data:result})
     })
     .catch((err) => {
         console.log(err);
@@ -251,6 +251,20 @@ app.post('/sendConnectionRequest',(req,res) => {
     })
 })
 
+app.get('/getConnectionRequests',( (req,res) => {
+    sendConnectionRequest.find({})
+    .then((result) => {
+        if(result.length === 0){
+            res.status(404).send({message:"No Connection Requests Found",data:{}})
+        }else{
+            res.status(200).send({message:"Connection Requests Found",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in fetching connection requests",data:{}})
+    })
+}))
 
 // Route to Fetch Connection Requests
 app.get('/getConnectionRequests/:id',(req,res) => {
