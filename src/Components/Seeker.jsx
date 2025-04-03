@@ -70,6 +70,20 @@ const User = ({user}) => {
         {degree: 'Intermediate', college: 'Sri Chaitanya Junior College', year: '2019-2021'},
         {degree: 'Secondary School', college: 'Sri Chaitanya High School', year: '2019'}
     ]
+
+    const projects = [
+        {title: 'Project 1', description: 'This is a project description', year: '2023'},
+        {title: 'Project 2', description: 'This is a project description', year: '2022'},
+        {title: 'Project 3', description: 'This is a project description', year: '2021'}
+    ]
+    // const skills = [
+    //     {skill: 'JavaScript', rating: 4},
+    //     {skill: 'React', rating: 5},
+    //     {skill: 'Node.js', rating: 3},
+    //     {skill: 'Python', rating: 4},
+    //     {skill: 'Java', rating: 2}
+    // ]
+    
     return (
         <>
             <div className='bg-black h-full bg-dotted-spacing-10 bg-dotted-white'>
@@ -172,8 +186,23 @@ const User = ({user}) => {
                                     })}
                                 </div>
                             </div>
-                        </div>
-                        
+                            <div className='border mx-40 px-12 py-8 bg-[rgba(255,255,255,.2)] rounded-xl backdrop-blur-sm flex flex-col gap-6'>
+                                <h2 className='text-3xl font-outfit font-normal text-white text-start w-full'>Projects</h2>
+                                <div className='flex flex-col py-2 justify-start items-start'>
+                                    {projects.map((proj,index) => {
+                                        return (
+                                            <div key={index} className='flex flex-col items-start w-full gap-2 py-2 px-4'>
+                                                <div className='flex justify-between w-full'>
+                                                    <p className='text-green-400 flex gap-2 items-center font-outfit text-lg font-light'>{proj.title} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
+                                                    <p className='text-white font-outfit text-lg font-light'>{proj.year}</p>
+                                                </div>
+                                                <p className='font-outfit text-md text-white'>{proj.description}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div>                  
                     </div>
                 </div>
             </div>
