@@ -344,6 +344,24 @@ app.delete('/deleteConnectionRequest/:id',(req,res) => {
     })
 })
 
+//Route to Unconnect Connections
+app.put('/unconnect',(req,res) => {
+    const connectionId = req.body.connectionId;
+    const seekerId = req.body.seekerId;
+    seekers.findByIdAndUpdate(seekerId,{$pull:{connections:{seekerId:connectionId}}},{new:true})
+    .then((result) => {
+        if(!result){
+            res.status(404).send({message:"Seeker Not Found",data:{}})
+        }else{
+            res.status(200).send({message:"Connection Removed",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in removing connection",data:{}})
+    })
+})
+
 
 
 // Enabling Server to run on port 5000
