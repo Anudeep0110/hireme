@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const basicAuth = require('express-basic-auth');
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 const devserver = require('./devs.js');
