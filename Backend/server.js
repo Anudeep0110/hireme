@@ -157,7 +157,12 @@ app.post('/verify-otp', (req, res) => {
 
 // Route to Fetch All Seekers
 app.get('/getseekers',(req,res) => {
-    seekers.find({},{__v:0})
+    const email = req.body.email;
+    let req_body = {}
+    if (email){
+        req_body = {email:email}
+    }
+    seekers.find(req_body,{__v:0})
     .then((result) => {
         if(result.length === 0){
             res.status(404).send({message:"No Seekers Found",data:{}})

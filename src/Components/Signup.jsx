@@ -13,9 +13,9 @@ const handleSubmit = async (e) => {
   const formData = new FormData(e.target);
   const data = Object.fromEntries(formData);
   try{
-  const response = await axios.post('http://localhost:5000/signup/seeker', data)
+  const response = await axios.post('https://hireme-zjcp.onrender.com/signup/seeker', data,{auth:{username:'anudeeppy',password:'Anudeep@12'}})
     if(response.status === 201){
-      await axios.post('http://localhost:5000/send-code', data)
+      await axios.post('https://hireme-zjcp.onrender.com/send-code', data,{auth:{username:'admin',password:'anudeepgude765'}})
       .then((response) => {
         if (response.status === 200) {
           toast.success("OTP Sent to your email",{

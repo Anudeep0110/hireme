@@ -33,7 +33,19 @@ const Seeker = () => {
         console.log(email);
         if (email) {
             setEmail(email)
-            axios.get('http://localhost:5000/getseekers',{email:email})
+            axios.get('https://hireme-zjcp.onrender.com/getseekers',
+                {
+                    email:email
+                },
+                {
+                    auth: {
+                        username: 'admin',
+                        password: 'anudeepgude765'
+                    },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
             .then(response => {
                 if(response.status === 200){
                     setLoading(false)

@@ -18,7 +18,7 @@ const VerifyOTP = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log(data);
-    axios.post('http://localhost:5000/verify-otp', { email:email, otp: data.otp })
+    axios.post('https://hireme-zjcp.onrender.com/verify-otp', { email:email, otp: data.otp },{auth:{username:'admin',password:'anudeepgude765'}})
     .then(response => {
       if (response.status === 200){
         localStorage.setItem('__hire_me_app_session_id',encode(email))
