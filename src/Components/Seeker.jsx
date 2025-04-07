@@ -33,7 +33,7 @@ const Seeker = () => {
         console.log(email);
         if (email) {
             setEmail(email)
-            axios.get('https://hireme-zjcp.onrender.com/getseekers',
+            axios.post('https://hireme-zjcp.onrender.com/getseeker',
                 {
                     email:email
                 },

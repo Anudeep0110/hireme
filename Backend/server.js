@@ -157,12 +157,7 @@ app.post('/verify-otp', (req, res) => {
 
 // Route to Fetch All Seekers
 app.get('/getseekers',(req,res) => {
-    const email = req.body.email;
-    let req_body = {}
-    if (email){
-        req_body = {email:email}
-    }
-    seekers.find(req_body,{__v:0})
+    seekers.find({},{__v:0})
     .then((result) => {
         if(result.length === 0){
             res.status(404).send({message:"No Seekers Found",data:{}})
@@ -173,6 +168,23 @@ app.get('/getseekers',(req,res) => {
     .catch((err) => {
         console.log(err);
         res.status(500).send({message:"Error in fetching seekers",data:{}})
+    })
+})
+
+// Route to Fetch Seekers by Email
+app.post('/getseeker',(req,res) => {
+    const email = req.body.email;
+    seekers.find({email:email},{__v:0})
+    .then((result) => {
+        if(result.length === 0){
+            res.status(404).send({message:"Seeker Not Found",data:{}})
+        }else{
+            res.status(200).send({message:"Seeker Found",data:result})
+        }
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send({message:"Error in fetching seeker",data:{}})
     })
 })
 
