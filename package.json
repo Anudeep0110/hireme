@@ -61,7 +61,9 @@
   "react-dotenv": {
     "whitelist": [
       "GITHUB_CLIENT_ID",
-      "GITHUB_CLIENT_SECRET"
+      "GITHUB_CLIENT_SECRET",
+      "API_USERNAME",
+      "API_PASSWORD"
     ]
   }
 }

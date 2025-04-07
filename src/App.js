@@ -8,6 +8,7 @@ import SignUp from './Components/Signup';
 import Seeker from './Components/Seeker';
 import Error from './Components/Error';
 
+
 function App() {
   return (
     <ParallaxProvider>

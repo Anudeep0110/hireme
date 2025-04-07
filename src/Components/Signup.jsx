@@ -3,6 +3,7 @@ import LoginPage, { Logo, Footer, Username, Password,Title} from '@react-login-p
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast,Bounce,ToastContainer } from 'react-toastify'
+import env from 'react-dotenv'
 
 const SignUp = () => {
 
@@ -13,9 +14,9 @@ const handleSubmit = async (e) => {
   const formData = new FormData(e.target);
   const data = Object.fromEntries(formData);
   try{
-  const response = await axios.post('https://hireme-zjcp.onrender.com/signup/seeker', data,{auth:{username:'anudeeppy',password:'Anudeep@12'}})
+  const response = await axios.post('https://hireme-zjcp.onrender.com/signup/seeker', data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
     if(response.status === 201){
-      await axios.post('https://hireme-zjcp.onrender.com/send-code', data,{auth:{username:'admin',password:'anudeepgude765'}})
+      await axios.post('https://hireme-zjcp.onrender.com/send-code', data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
       .then((response) => {
         if (response.status === 200) {
           toast.success("OTP Sent to your email",{

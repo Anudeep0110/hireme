@@ -16,6 +16,7 @@ import PhoneIcon from '../Assets/phone_icon.png'
 import MailIcon from '../Assets/mail_icon.png'
 import LinkedInIcon from '../Assets/linkedin_icon.png'
 import EditIcon from '../Assets/edit_icon.png'
+import env from 'react-dotenv'
 
 
 
@@ -38,10 +39,7 @@ const Seeker = () => {
                     email:email
                 },
                 {
-                    auth: {
-                        username: 'admin',
-                        password: 'anudeepgude765'
-                    },
+                    auth:{username:env.API_USERNAME,password:env.API_PASSWORD},
                     headers: {
                         'Content-Type': 'application/json'
                     }

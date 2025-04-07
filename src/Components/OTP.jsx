@@ -4,6 +4,7 @@ import {useLocation,useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import { toast,Bounce,ToastContainer } from 'react-toastify'
 import {encode} from 'js-base64'
+import env from 'react-dotenv'
 
 
 const VerifyOTP = () => {
@@ -18,7 +19,7 @@ const VerifyOTP = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
     console.log(data);
-    axios.post('https://hireme-zjcp.onrender.com/verify-otp', { email:email, otp: data.otp },{auth:{username:'admin',password:'anudeepgude765'}})
+    axios.post('https://hireme-zjcp.onrender.com/verify-otp', { email:email, otp: data.otp },{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
     .then(response => {
       if (response.status === 200){
         localStorage.setItem('__hire_me_app_session_id',encode(email))
