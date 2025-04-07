@@ -75,24 +75,13 @@ export default Seeker
 
 const User = ({user}) => {
 
-    const education = [
-        {degree: 'B.E/B.Tech', college: 'Anil Neerukonda Institute of Technology and Sciences', year: '2021-2025'},
-        {degree: 'Intermediate', college: 'Sri Chaitanya Junior College', year: '2019-2021'},
-        {degree: 'Secondary School', college: 'Sri Chaitanya High School', year: '2019'}
-    ]
+    console.log(user);
 
-    const projects = [
-        {title: 'Project 1', description: 'This is a project description', year: '2023'},
-        {title: 'Project 2', description: 'This is a project description', year: '2022'},
-        {title: 'Project 3', description: 'This is a project description', year: '2021'}
-    ]
-    // const skills = [
-    //     {skill: 'JavaScript', rating: 4},
-    //     {skill: 'React', rating: 5},
-    //     {skill: 'Node.js', rating: 3},
-    //     {skill: 'Python', rating: 4},
-    //     {skill: 'Java', rating: 2}
-    // ]
+    const education = user.education || []
+    const experience = user.experience || []
+    const projects = user.projects || []
+    const skills = user.skills || []
+    const certifications = user.certifications || []
     
     return (
         <>
@@ -128,22 +117,22 @@ const User = ({user}) => {
                                     <img src={ProfileIcon} alt='Profile' className='w-28 rounded-full border'></img>
                                     <div className='flex px-10 py-2 justify-center gap-1 items-start text-white flex-col h-full'>
                                         <p className='font-outfit font-semibold text-2xl'>{user.name}</p>
-                                        <p className='font-outfit font-normal text-lg'>B.E/B.Tech</p>
-                                        <p className='font-outfit font-thin text-md'>Anil Neerukonda Institute of Technology and Sciences</p>
+                                        <p className='font-outfit font-normal text-lg'>{education[0]['degree']}</p>
+                                        <p className='font-outfit font-thin text-md'>{education[0]['institutionName']}</p>
                                     </div>
                                 </div>
                                 <div className='w-full flex-wrap flex justify-start items-start'>
                                     <span className='flex w-1/3 justify-start gap-2 py-2 px-4'>
                                         <img src={LocationIcon} alt='Location' className='w-5'></img>
-                                        <p className='font-outfit text-md text-white'>Visakhapatnam</p>
+                                        <p className='font-outfit text-md text-white'>{experience[0]['location']}</p>
                                     </span>
                                     <span className='flex w-1/3 gap-2 py-2 px-4'>
                                         <img src={BirthIcon} alt='Location' className='w-5'></img>
-                                        <p className='font-outfit text-md text-white'>2003-05-25</p>
+                                        <p className='font-outfit text-md text-white'>{String(user['dob']).substring(0,10)}</p>
                                     </span>
                                     <span className='flex w-1/3 gap-2 py-2 px-4'>
                                         <img src={GenderIcon} alt='Location' className='w-5'></img>
-                                        <p className='font-outfit text-md text-white'>Male</p>
+                                        <p className='font-outfit text-md text-white'>{user.gender}</p>
                                     </span>
                                     <span className='flex w-1/3 gap-2 py-2 px-4'>
                                         <img src={MailIcon} alt='Location' className='w-5'></img>
@@ -155,7 +144,7 @@ const User = ({user}) => {
                                     </span>
                                     <span className='flex w-1/3 gap-2 py-2 px-4'>
                                         <img src={LinkedInIcon} alt='Location' className='w-5'></img>
-                                        <p className='font-outfit text-md text-white'>Anudeep Gude</p>
+                                        <p className='font-outfit text-md text-white'>{String(user.linkedIn).replaceAll('https://www.linkedin.com/in/','')}</p>
                                     </span>
                                 </div>
                             </div>
@@ -164,21 +153,37 @@ const User = ({user}) => {
                                 <div className='flex flex-wrap py-2 px-10'>
                                     <span className='flex w-1/3 flex-col items-start justify-start gap-2 py-2 px-4'>
                                         <p className='text-green-400 font-outfit text-lg font-light '>Preferred Job Type</p>
-                                        <p className='font-outfit text-md text-white'>Full Time</p>
+                                        <p className='font-outfit text-md text-white'>{user.jobPreferences.jobType}</p>
                                     </span>
                                     <span className='flex w-1/3 flex-col items-start justify-start gap-2 py-2 px-4'>
                                         <p className='text-green-400 font-outfit text-lg font-light '>Work Availability</p>
-                                        <p className='font-outfit text-md text-white'>Flexible</p>
+                                        <p className='font-outfit text-md text-white'>{user.jobPreferences.workAvailability}</p>
                                     </span>
                                     <span className='flex w-1/3 flex-col items-start justify-start gap-2 py-2 px-4'>
                                         <p className='text-green-400 font-outfit text-lg font-light '>Preferred Work Location</p>
-                                        <p className='font-outfit text-md text-white'>Visakhapatnam</p>
+                                        <p className='font-outfit text-md text-white'>{user.jobPreferences.preferredLocation}</p>
                                     </span>
                                 </div>
                             </div>
                             <div className='border mx-40 px-12 py-8 bg-[rgba(255,255,255,.2)] rounded-xl backdrop-blur-sm flex flex-col gap-6'>
                                 <h2 className='text-3xl font-outfit font-normal text-white text-start w-full'>About Me</h2>
-                                <p className='text-lg font-outfit text-justify text-white font-extralight'>The rapid advancement of technology has drastically changed the way we live and work. With the rise of artificial intelligence, automation, and machine learning, industries are evolving at an unprecedented pace. While these innovations bring about increased efficiency and convenience, they also present new challenges and ethical considerations. As we continue to integrate technology into our daily lives, it is crucial to strike a balance between progress and responsibility, ensuring that these developments benefit society as a whole. The future will undoubtedly be shaped by the decisions we make today in navigating these changes.</p>
+                                <p className='text-lg font-outfit text-justify text-white font-extralight'>{user.bio}</p>
+                            </div>
+                            <div className='border mx-40 px-12 py-8 bg-[rgba(255,255,255,.2)] rounded-xl backdrop-blur-sm flex flex-col gap-6'>
+                                <h2 className='text-3xl font-outfit font-normal text-white text-start w-full'>Experience</h2>
+                                <div className='flex flex-col py-2 justify-start items-start'>
+                                    {experience.map((exp,index) => {
+                                        return (
+                                            <div key={index} className='flex flex-col items-start w-full gap-2 py-2 px-4'>
+                                                <div className='flex justify-between w-full'>
+                                                    <p className='text-white flex gap-2 items-center font-outfit text-md italic font-light'><span className='text-green-400 text-lg not-italic'>{exp.jobTitle}</span> {exp.companyName} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
+                                                    <p className='text-white font-outfit text-lg font-light'>{String(exp.startDate).substring(0,7).replaceAll('-','/')} - {exp.endDate !== null ? String(exp.endDate).substring(0,7).replaceAll('-','/') : 'Present'}</p>
+                                                </div>
+                                                <p className='font-outfit text-md text-white'>{exp.description}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
                             </div>
                             <div className='border mx-40 px-12 py-8 bg-[rgba(255,255,255,.2)] rounded-xl backdrop-blur-sm flex flex-col gap-6'>
                                 <h2 className='text-3xl font-outfit font-normal text-white text-start w-full'>Education</h2>
@@ -187,8 +192,8 @@ const User = ({user}) => {
                                         return (
                                             <div key={index} className='flex flex-col items-start w-full gap-2 py-2 px-4'>
                                                 <div className='flex justify-between w-full'>
-                                                    <p className='text-green-400 flex gap-2 items-center font-outfit text-lg font-light'>{edu.college} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
-                                                    <p className='text-white font-outfit text-lg font-light'>{edu.year}</p>
+                                                    <p className='text-green-400 flex gap-2 items-center font-outfit text-lg font-light'>{edu.institutionName} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
+                                                    <p className='text-white font-outfit text-lg font-light'>{String(edu.startDate).substring(0,4)} - {String(edu.endDate).substring(0,4)}</p>
                                                 </div>
                                                 <p className='font-outfit text-md text-white'>{edu.degree}</p>
                                             </div>
@@ -203,10 +208,36 @@ const User = ({user}) => {
                                         return (
                                             <div key={index} className='flex flex-col items-start w-full gap-2 py-2 px-4'>
                                                 <div className='flex justify-between w-full'>
-                                                    <p className='text-green-400 flex gap-2 items-center font-outfit text-lg font-light'>{proj.title} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
-                                                    <p className='text-white font-outfit text-lg font-light'>{proj.year}</p>
+                                                    <p className='text-green-400 flex gap-2 items-center font-outfit text-lg font-light'>{proj.projectName} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
+                                                    <p className='text-white font-outfit text-lg font-light'>{String(proj.startDate).substring(0,7).replaceAll('-','/')} - {proj.endDate !== null ? String(proj.endDate).substring(0,7) : 'Present'}</p>
                                                 </div>
                                                 <p className='font-outfit text-md text-white'>{proj.description}</p>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            <div className='border mx-40 px-12 py-8 bg-[rgba(255,255,255,.2)] rounded-xl backdrop-blur-sm flex flex-col gap-6'>
+                                <h2 className='text-3xl font-outfit font-normal text-white text-start w-full'>Skills</h2>
+                                <div className='flex flex-wrap py-2 justify-start items-start'>
+                                    {skills.map((skill,index) => {
+                                        return (
+                                            <span key={index} className='bg-gray-300 flex items-center text-black cursor-pointer group px-4 py-2 rounded-lg me-2 mb-2'>{skill.skillName} <span className='hidden group-hover:block text-lg'> - {skill.skillLevel} Star</span></span>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            <div className='border mx-40 px-12 py-8 bg-[rgba(255,255,255,.2)] rounded-xl backdrop-blur-sm flex flex-col gap-6'>
+                                <h2 className='text-3xl font-outfit font-normal text-white text-start w-full'>Certifications</h2>
+                                <div className='flex flex-col py-2 justify-start items-start'>
+                                    {certifications.map((cert,index) => {
+                                        return (
+                                            <div key={index} className='flex flex-col items-start w-full gap-2 py-2 px-4'>
+                                                <div className='flex justify-between w-full'>
+                                                    <p className='text-green-400 flex gap-2 items-center font-outfit text-lg font-light'>{cert.certificationName} <img src={EditIcon} alt='Edit'className='w-5 h-5 cursor-pointer'></img></p>
+                                                    <p className='text-white font-outfit text-lg font-light'>{String(cert.issueDate).substring(0,7).replaceAll('-','/')} - {cert.expirationDate !== null ? String(cert.expirationDate).substring(0,7) : 'No Expiry'}</p>
+                                                </div>
+                                                <p className='font-outfit text-md text-white'>{cert.issuingOrganization}</p>
                                             </div>
                                         )
                                     })}

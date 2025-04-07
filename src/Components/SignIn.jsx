@@ -14,20 +14,20 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const data = Object.fromEntries(formData);
+  toast.success("OTP Sent to your email",{
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: 1,
+    theme: "dark",
+    transition: Bounce,
+  })
   await axios.post('https://hireme-zjcp.onrender.com/send-code',data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
   .then((response) => {
     if (response.status === 200) {
-      toast.success("OTP Sent to your email",{
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: 1,
-        theme: "dark",
-        transition: Bounce,
-      })
       navigate('/verifyotp', { state: { email: data.email } });
     }else if(response.status === 404){
       toast.error("User Not Found",{
