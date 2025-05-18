@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const devserver = require('./devs.js');
 const s3DBConnect = require('./s3DBConnect.js');
-const jobs = require('/jobs.js')
+const jobs = require('./jobs.js')
 
 
 //Basic Auth Middleware
