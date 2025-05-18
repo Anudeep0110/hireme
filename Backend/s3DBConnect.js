@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Configure AWS S3
 const s3 = new S3Client({ region: "us-east-1" }); // Change region as needed
-const BUCKET_NAME = "hireme"; // Replace with your S3 bucket name
+const BUCKET_NAME = "hireme5221"; // Replace with your S3 bucket name
 
 // Configure multer for file upload
 const storage = multer.memoryStorage();
