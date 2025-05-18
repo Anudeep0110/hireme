@@ -8,8 +8,17 @@ const path = require("path");
 const router = express.Router();
 
 // Configure AWS S3
-const s3 = new S3Client({ region: "us-east-1" }); // Change region as needed
-const BUCKET_NAME = "hireme5221"; // Replace with your S3 bucket name
+require("dotenv").config(); // if using .env
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  }
+});
+
+const BUCKET_NAME = process.env.AWS_BUCKET_NAME;
 
 // Configure multer for file upload
 const storage = multer.memoryStorage();
@@ -20,13 +29,15 @@ router.post("/upload", upload.single("pdf"), async (req, res) => {
   try {
     const file = req.file;
 
+
+
     if (!file || file.mimetype !== "application/pdf") {
       return res.status(400).json({ message: "Only PDF files are allowed" });
     }
 
     const params = {
       Bucket: BUCKET_NAME,
-      Key: `pdfs/${Date.now()}_${file.originalname}`,
+      Key: `Resumes/${Date.now()}_${file.originalname}`,
       Body: file.buffer,
       ContentType: file.mimetype,
     };  
@@ -41,21 +52,19 @@ router.post("/upload", upload.single("pdf"), async (req, res) => {
 });
 
 // 📥 Download Route (returns signed URL)
-router.get("/download/:key", async (req, res) => {
+router.get("/download/:filename", async (req, res) => {
+  const filename = req.params.filename;
+  const command = new GetObjectCommand({
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Key: filename,
+  });
+
   try {
-    const key = req.params.key;
-
-    const command = new GetObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: key,
-    });
-
-    const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 }); // URL valid for 60 seconds
-
-    res.status(200).json({ url: signedUrl });
+    const url = await getSignedUrl(s3, command, { expiresIn: 60 * 5 }); // 5 mins
+    res.json({ downloadUrl: url });
   } catch (err) {
-    console.error("Download error:", err);
-    res.status(500).json({ message: "Failed to generate download link" });
+    console.error("Error generating signed URL:", err);
+    res.status(500).json({ error: "Failed to generate download URL" });
   }
 });
 
