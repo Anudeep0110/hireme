@@ -8,6 +8,7 @@ require('dotenv').config();
 
 const devserver = require('./devs.js');
 const s3DBConnect = require('./s3DBConnect.js');
+const jobs = require('/jobs.js')
 
 
 //Basic Auth Middleware
@@ -53,6 +54,7 @@ app.use(basicAuth({
 
 // servers
 app.use('/', devserver);
+app.use('/',jobs);
 app.use('/s3', s3DBConnect);
 
 //mongodb connection
