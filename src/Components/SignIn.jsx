@@ -25,7 +25,7 @@ const handleSubmit = async (e) => {
     theme: "dark",
     transition: Bounce,
   })
-  await axios.post('https://hireme-zjcp.onrender.com/send-code',data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
+  await axios.post('http://localhost:5000/send-code',data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
   .then((response) => {
     if (response.status === 200) {
       navigate('/verifyotp', { state: { email: data.email } });

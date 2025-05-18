@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 const devserver = require('./devs.js');
+const s3DBConnect = require('./s3DBConnect.js');
 
 
 //Basic Auth Middleware
@@ -52,7 +53,7 @@ app.use(basicAuth({
 
 // servers
 app.use('/', devserver);
-
+app.use('/s3', s3DBConnect);
 
 //mongodb connection
 require('./connexion.js');

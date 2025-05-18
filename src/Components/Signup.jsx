@@ -14,9 +14,9 @@ const handleSubmit = async (e) => {
   const formData = new FormData(e.target);
   const data = Object.fromEntries(formData);
   try{
-  const response = await axios.post('https://hireme-zjcp.onrender.com/signup/seeker', data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
+  const response = await axios.post('http://localhost:5000/signup/seeker', data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
     if(response.status === 201){
-      await axios.post('https://hireme-zjcp.onrender.com/send-code', data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
+      await axios.post('http://localhost:5000/send-code', data,{auth:{username:env.API_USERNAME,password:env.API_PASSWORD}})
       .then((response) => {
         if (response.status === 200) {
           toast.success("OTP Sent to your email",{

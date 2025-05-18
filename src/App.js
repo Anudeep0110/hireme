@@ -7,6 +7,7 @@ import './App.css';
 import SignUp from './Components/Signup';
 import Seeker from './Components/Seeker';
 import Error from './Components/Error';
+import JobsList from './Components/JobsList';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/verifyotp" element={<OTP />} />
           <Route path="/error" element={<Error />} />
           <Route path="/seeker" element={<Seeker/>} />
+          <Route path="/jobs" element={<JobsList/>} />
         </Routes>
       </BrowserRouter>
     </ParallaxProvider>

@@ -12,8 +12,28 @@ import AIIcon from '../Assets/ai_icon.png'
 import JobIcon from '../Assets/job_icon.png'
 import InterviewIcon from '../Assets/interview_icon.png'
 import { Fade, Slide, AttentionSeeker } from 'react-awesome-reveal';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+
+  const [search,setSearch] = React.useState('')
+  const searchRef = React.useRef(null)
+  const navigate = useNavigate()
+
+
+  const clickOption = (e) => {
+    e.preventDefault();
+    setSearch(e.target.innerText)
+    searchRef.current?.focus()
+  }
+
+  const searchJob = (e) => {
+    e.preventDefault();
+    if(e.key === 'Enter'){
+        navigate('/jobs', { state: { search: search } })
+        setSearch('')
+    }
+  }
   return (
     <>
         <div className='bg-black flex justify-center items-start m-0 overflow-hidden'>
@@ -29,15 +49,15 @@ const HomePage = () => {
                       className='md:text-[60px] text-[40px] font-outfit font-bold'>Where <span className='text-green-700 text-[55px] md:text-[65px]'>Talent </span> meets <span className='text-green-700 text-[55px] md:text-[65px]'>Oppurtunity </span></motion.p>
                       <AttentionSeeker  effect='shakeX' duration={800} delay={0}>
                       <div className='md:px-40 flex py-4 md:mt-16 items-center  md:mx-40'>
-                          <input className='bg-black mx-auto justify-self-center text-white text-2xl md:w-[800px] font-outfit border-2 rounded-full p-4 px-8 font-medium' placeholder='Search for Jobs'></input>
+                          <input ref={searchRef} className='bg-black mx-auto justify-self-center text-white text-2xl md:w-[800px] font-outfit border-2 rounded-full p-4 px-8 font-medium' value={search} placeholder='Search for Jobs' onKeyDown={searchJob}></input>
                       </div>
                       </AttentionSeeker>
                       <div className='flex flex-wrap mt-2 mb-10 justify-center font-outfit gap-3 text-lg text-gray-300 font-normal'>
-                        <span className='bg-black border px-3 rounded-full hover:border-green-400 hover:text-green-700'>Full Stack Developer</span>
-                        <span className='bg-black border px-3 rounded-full hover:border-green-400 hover:text-green-700'>Techincal Analyst</span>
-                        <span className='bg-black border px-3 rounded-full hover:border-green-400 hover:text-green-700'>Software Engineer</span>
-                        <span className='bg-black border px-3 rounded-full hover:border-green-400 hover:text-green-700'>Python Developer</span>
-                        <span className='bg-black border px-3 rounded-full hover:border-green-400 hover:text-green-700'>UI/UX Designer</span>
+                        <span onClick={clickOption} className='bg-black border px-3 rounded-full cursor-pointer hover:border-green-400 hover:text-green-700'>Full Stack Developer</span>
+                        <span onClick={clickOption} className='bg-black border px-3 rounded-full cursor-pointer hover:border-green-400 hover:text-green-700'>Techincal Analyst</span>
+                        <span onClick={clickOption} className='bg-black border px-3 rounded-full cursor-pointer hover:border-green-400 hover:text-green-700'>Software Engineer</span>
+                        <span onClick={clickOption} className='bg-black border px-3 rounded-full cursor-pointer hover:border-green-400 hover:text-green-700'>Python Developer</span>
+                        <span onClick={clickOption} className='bg-black border px-3 rounded-full cursor-pointer hover:border-green-400 hover:text-green-700'>UI/UX Designer</span>
                       </div>
                     <motion.p 
                       initial={{ opacity: 0 }}

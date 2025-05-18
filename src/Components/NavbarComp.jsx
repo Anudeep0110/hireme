@@ -45,7 +45,7 @@ const NavbarComp = () => {
   return (
     <>
         <div className='h-auto z-50 w-full font-outfit flex justify-between items-center md:px-24 px-12 py-8'>
-            <div className='text-3xl font-bold text-white me-auto'>Hire Me</div>
+            <div className='text-3xl font-bold text-white me-auto cursor-pointer' onClick={() =>{ navigate('/')}}>Hire Me</div>
             <RxHamburgerMenu className='md:hidden block text-3xl text-white' onClick={() => setShowMenu(!showMenu)} />
             <div className='md:flex ms-auto hidden justify-between md:text-2xl items-center gap-12'>
                 <a href='/home'><p className='text-white font-semibold hover:text-glow-green-700 hover:text-green-700'>Home</p></a>
